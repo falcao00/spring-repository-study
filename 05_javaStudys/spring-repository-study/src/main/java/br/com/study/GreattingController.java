@@ -17,6 +17,7 @@ public class GreattingController {
 	private static final String template = "Hello, %s!";
 	private final AtomicLong count = new AtomicLong();
 	
+	//addition
 	@RequestMapping(value = "/sum/{numberOne}/{numberTwo}", 
 			method=RequestMethod.GET)
 	public Double sum(
@@ -26,10 +27,55 @@ public class GreattingController {
 		if( !isNumeric(numberOne) || !isNumeric(numberTwo) ) {
 			throw new UnsuportedMathOperation("Please Set a numeric value");
 		} 
-		
-		
 		return convertToDouble(numberOne) + convertToDouble(numberTwo);
+	}
+	
+	//subtraction
+	@RequestMapping(value = "/sub/{numberOne}/{numberTwo}", 
+			method=RequestMethod.GET)
+	public Double sub(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo) throws Exception {
+				
+		if( !isNumeric(numberOne) || !isNumeric(numberTwo) ) {
+			throw new UnsuportedMathOperation("Please Set a numeric value");
+		} 
+		return convertToDouble(numberOne) - convertToDouble(numberTwo);
+	}
+	
+	//multiplication
+	@RequestMapping(value = "/mult/{numberOne}/{numberTwo}", 
+			method=RequestMethod.GET)
+	public Double mult(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo) throws Exception {
 		
+		if( !isNumeric(numberOne) || !isNumeric(numberTwo) ) {
+			throw new UnsuportedMathOperation("Please Set a numeric value");
+		} 
+		return convertToDouble(numberOne) * convertToDouble(numberTwo);
+		
+	}
+	
+	//division
+	@RequestMapping(value = "/div/{numberOne}/{numberTwo}", 
+			method=RequestMethod.GET)
+	public Double div(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo) throws Exception {
+		
+		if( !isNumeric(numberOne) || !isNumeric(numberTwo) ) {
+			throw new UnsuportedMathOperation("Please Set a numeric value");
+		} else if (!checkDivisionForZero(numberTwo)) {
+			throw new UnsuportedMathOperation("Please Set a number diferent from 0");
+		}
+		return convertToDouble(numberOne) / convertToDouble(numberTwo);
+	}
+
+	private boolean checkDivisionForZero(String numberTwo) {
+		double strNumber = convertToDouble(numberTwo);
+		if (strNumber != 0) return true;
+		return false;
 	}
 
 	private double convertToDouble(String strNumber) {
