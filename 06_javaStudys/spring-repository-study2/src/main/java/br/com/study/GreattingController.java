@@ -71,6 +71,35 @@ public class GreattingController {
 		}
 		return convertToDouble(numberOne) / convertToDouble(numberTwo);
 	}
+	
+	//average
+	@RequestMapping(value = "/avre/{numberOne}/{numberTwo}", 
+			method=RequestMethod.GET)
+	public Double avre(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo) throws Exception {
+		
+		if( !isNumeric(numberOne) || !isNumeric(numberTwo) ) {
+			throw new UnsuportedMathOperation("Please Set a numeric value");
+		}
+		
+		Double sum = sum(numberOne, numberTwo);
+		
+		return sum/2;
+	}
+	
+	//Sqrt
+	@RequestMapping(value = "/sqrt/{numberOne}/", 
+			method=RequestMethod.GET)
+	public Double Sqrt(
+			@PathVariable(value = "numberOne") String numberOne
+			) throws Exception {
+		
+		if( !isNumeric(numberOne)) {
+			throw new UnsuportedMathOperation("Please Set a numeric value");
+		}
+		return Math.sqrt(convertToDouble(numberOne));
+	}
 
 	private boolean checkDivisionForZero(String numberTwo) {
 		double strNumber = convertToDouble(numberTwo);
